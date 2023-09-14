@@ -1,6 +1,6 @@
 # TweetQuotes Extension
 
-This Chrome extension aims to simplify the experience of viewing Twitter quotes. It adds a floating button on Twitter tweet pages that redirects the user to the corresponding "quotes" URL, where all quotes for a particular tweet can be found.
+This Chrome extension streamlines the process of viewing quoted tweets on Twitter/X. It adds a floating button directly on individual tweet pages. Clicking this button will instantly take you to the "quotes" section of that tweet, eliminating the need for multiple clicks or navigation. This makes it easier and faster to see all the quotes associated with a specific tweet.
 
 The extension comprises two main parts:
 
@@ -11,7 +11,8 @@ The extension comprises two main parts:
 ## Installation
 
 - Clone the repository or download the source code.
-- Open Google Chrome and navigate to chrome://extensions/.
+- Open Google Chrome and navigate to `chrome://extensions/`
 - Enable Developer mode at the top-right corner.
-- Click Load unpacked and select the directory (which is the `public` folder) where the extension's files are located.
+- Click Load unpacked and select the directory (which is the `/public` folder) where the extension's files are located.
 - The extension should now be installed.
+- Reload Twitter
