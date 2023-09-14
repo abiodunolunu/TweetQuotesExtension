@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "TweetQuotes Shortcut",
+  "description": "TweetQuotes Shortcut",
+  "version": "1.0.0",
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": ["*://twitter.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {},
+  "permissions": ["scripting"],
+  "host_permissions": ["*://twitter.com/*"]
+}
