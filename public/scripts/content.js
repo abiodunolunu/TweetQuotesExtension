@@ -1,10 +1,8 @@
 const regex = new RegExp("^https://twitter.com/[^/]+/status/[^/]+$");
-
-const quoteSvgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-quote" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-<path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5" />
-<path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5" />
-</svg>`;
+/**
+ * @type {HTMLButtonElement | undefined}
+ */
+let quoteButton;
 
 /**
  * @type {Partial<CSSStyleDeclaration>}
@@ -27,10 +25,6 @@ const buttonStyles = {
   cursor: "pointer",
   border: "none",
 };
-/**
- * @type {HTMLButtonElement | undefined}
- */
-let buttonTag;
 
 /**
  * @param {string} url
@@ -44,39 +38,46 @@ function createQuoteURL(url) {
   return url;
 }
 
+/**
+ * @param {HTMLElement} element
+ * @param {Partial<CSSStyleDeclaration>} styles
+ */
+function applyStyles(element, styles) {
+  for (const [key, value] of Object.entries(styles)) {
+    element.style[key] = value;
+  }
+}
+
 function injectButton() {
-  const currentPage = document.body;
   const currentPageURL = document.location.href;
   const quotesURL = createQuoteURL(currentPageURL);
 
   const button = document.createElement("button");
-
   button.innerHTML = "<span>view quotes</span>";
 
-  for (const [key, value] of Object.entries(buttonStyles)) {
-    button.style[key] = value;
-  }
+  applyStyles(button, buttonStyles);
 
   button.addEventListener("click", function () {
     window.location = quotesURL;
   });
 
-  buttonTag = button;
-
-  currentPage.append(button);
+  quoteButton = button;
+  document.body.append(button);
 }
 
 function removeButton() {
-  if (buttonTag) {
-    buttonTag.remove();
-    buttonTag = undefined;
+  if (quoteButton) {
+    quoteButton.remove();
+    quoteButton = undefined;
   }
 }
 
+// Initial Injection
 if (regex.test(window.location)) {
   injectButton();
 }
 
+//Listen to change sent from service worker.
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const isATweetPage = regex.test(request.url);
 
